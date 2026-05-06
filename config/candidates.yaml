@@ -1,0 +1,42 @@
+# config/candidates.yaml
+# 3 candidatos deliberadamente diferentes em perfil.
+# Verifique disponibilidade rodando: python check_candidates.py
+#
+# IMPORTANTE: IDs de modelo mudam. Se algum não existir mais no Groq,
+# consulte https://console.groq.com/docs/models e atualize.
+candidates:
+  - name: llama_70b
+    provider: groq
+    model_id: llama-3.3-70b-versatile
+    perfil: "grande, generalista forte"
+    cost_per_1m_input_usd: 0.59
+    cost_per_1m_output_usd: 0.79
+    context_window: 128000
+    notes: "Free tier com rate limits; cair para OpenRouter se 429"
+
+  - name: llama_8b
+    provider: groq
+    model_id: llama-3.1-8b-instant
+    perfil: "pequeno, latência muito baixa"
+    cost_per_1m_input_usd: 0.05
+    cost_per_1m_output_usd: 0.08
+    context_window: 128000
+    notes: "Baseline barato; bom para checar se tarefa precisa mesmo de modelo grande"
+
+  - name: gpt_oss_20b
+    provider: groq
+    model_id: openai/gpt-oss-20b
+    perfil: "família alternativa, treinamento independente"
+    cost_per_1m_input_usd: 0.075
+    cost_per_1m_output_usd: 0.30
+    context_window: 131072
+    notes: "Diversidade de família (GPT-OSS); substitui gemma2-9b-it (decommissionado em 2026)"
+
+# Juiz LLM — não é candidato, é avaliador.
+# Regra: o juiz NUNCA pode ser o mesmo modelo que está sendo avaliado.
+judge:
+  provider: openrouter
+  model_id: anthropic/claude-sonnet-4.6
+  cost_per_1m_input_usd: 3.00
+  cost_per_1m_output_usd: 15.00
+  notes: "Substitui claude-3.5-sonnet (sem endpoints no OpenRouter); mesmo tier de preço. Custo total ~USD 0.10-0.30 por run completa. Alternativa econômica: anthropic/claude-haiku-4.5 ($1/$5)."
